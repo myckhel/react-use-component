@@ -20,15 +20,22 @@ export const useMergeState = (initialState) => {
 };
 
 export const useComponent = (p) => {
-  const {state, props = {}, ...rest} = p
-  const ref = useRef(rest)
+  const {state = {}, props = {}, ...rest} = p
   const [_state, setState] = useMergeState(state)
+
+  const ref = useRef(rest)
+
+  ref.current.setState = setState
   ref.current.state = _state
   ref.current.props = props
-  ref.current.setState = setState
 
   useLayoutEffect(() => {
-    ref.current.constructor()
+    if (
+      typeof ref.current.constructor === 'function'
+      && typeof ref.current !== 'class'
+    ) {
+      ref.current.constructor()
+    }
   }, [])
 
   return ref.current

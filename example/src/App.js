@@ -28,15 +28,26 @@ const App = (props) => {
     }
   })
 
+  const _class = useComponent(new class {
+    constructor() {
+      console.log(this.ref)
+    }
+    something = () => {
+      return 1 + 2
+    }
+    ref = 'ref string'
+  })
+
   useEffect(() => {
     setTimeout(() => self.setState((s) => ({...s, value: 2})), 2000)
     setTimeout(() => self.getState(), 4000)
-    setTimeout(() => self.updateMe(), 6000)
     setTimeout(() => self.updateMe('Johnny'), 8000)
     setTimeout(() => reUseRef.current.method(), 8000)
+    console.log(_class.something())
+    setTimeout(() => _class.setState({newValue: 2}), 6000)
   }, [])
 
-  console.log({reUseRef});
+  console.log({reUseRef, _class});
   return (
     <div>
       <div>Create React Library Example 😄</div>
