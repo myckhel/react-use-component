@@ -19,12 +19,12 @@ export const useMergeState = (initialState) => {
   return [state, setMergedState, ref];
 };
 
-export const useComponent = (props) => {
-  const {state, _props = {}, ...rest} = props
+export const useComponent = (p) => {
+  const {state, props = {}, ...rest} = p
   const ref = useRef(rest)
   const [_state, setState] = useMergeState(state)
   ref.current.state = _state
-  ref.current.props = _props
+  ref.current.props = props
   ref.current.setState = setState
 
   return ref.current
