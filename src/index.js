@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useLayoutEffect, useState, useRef} from 'react'
 
 const merge = (a, b) => Object.assign({}, a, b)
 
@@ -26,6 +26,10 @@ export const useComponent = (p) => {
   ref.current.state = _state
   ref.current.props = props
   ref.current.setState = setState
+
+  useLayoutEffect(() => {
+    ref.current.constructor()
+  }, [])
 
   return ref.current
 }

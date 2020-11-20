@@ -6,8 +6,16 @@ const App = (props) => {
   const reUseRef = useRef()
   const self = useComponent({
     props,
+    constructor: () => {
+      self.age = 100
+      self.logInit()
+      console.log({self});
+    },
     state: {
       abc: 'def',
+    },
+    logInit: () => {
+      console.log('initialized');
     },
     getState: () => {
       console.log(self.state)
